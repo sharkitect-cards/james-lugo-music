@@ -88,8 +88,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
     <a href="https://www.facebook.com/jameslugomusicinc/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a>
   </div>
   <div class="btn-row">
-    <button class="save-btn" onclick="saveContact()"><svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>Save Contact</button>
-    <button class="qr-btn" onclick="toggleQR()"><svg viewBox="0 0 24 24"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zm8-2v8h8V3h-8zm6 6h-4V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm13-2h-2v3h-3v2h3v3h2v-3h3v-2h-3v-3zm-3 8v-2h-2v2h2zm4 0v-2h-2v2h2z"/></svg>QR</button>
+    <button class="save-btn" onclick="toggleQR()"><svg viewBox="0 0 24 24"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zm8-2v8h8V3h-8zm6 6h-4V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm13-2h-2v3h-3v2h3v3h2v-3h3v-2h-3v-3zm-3 8v-2h-2v2h2zm4 0v-2h-2v2h2z"/></svg>Show My QR Code</button>
   </div>
   <div class="footer">James Lugo Music &middot; East Nashville, TN</div>
 </div>
@@ -101,7 +100,6 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
   </div>
 </div>
 <script>
-function saveContact(){window.location.href='contact.vcf';}
 function toggleQR(){document.getElementById('qrOverlay').classList.toggle('active');}
 function generateQR(){const svg=document.getElementById('qrSvg');fetch('qr-code.svg').then(r=>r.text()).then(t=>{const doc=new DOMParser().parseFromString(t,'image/svg+xml');const src=doc.querySelector('svg');const vb=(src&&src.getAttribute('viewBox'))||'0 0 49 49';const side=vb.split(' ')[2]||'49';svg.setAttribute('viewBox',vb);const paths=doc.querySelectorAll('path');svg.innerHTML='';const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');bg.setAttribute('width',side);bg.setAttribute('height',side);bg.setAttribute('fill','var(--bg)');svg.appendChild(bg);paths.forEach(p=>{const n=document.createElementNS('http://www.w3.org/2000/svg','path');n.setAttribute('d',p.getAttribute('d'));n.setAttribute('fill','var(--accent)');svg.appendChild(n);});}).catch(()=>{svg.innerHTML='<text x="20.5" y="22" text-anchor="middle" fill="var(--accent)" font-size="3">QR</text>';});}
 generateQR();
