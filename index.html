@@ -95,15 +95,15 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 </div>
 <div class="qr-overlay" id="qrOverlay" onclick="toggleQR()">
   <div class="qr-modal" onclick="event.stopPropagation()">
-    <h3>SCAN TO CONNECT</h3><p>Point your camera at the code</p>
-    <svg viewBox="0 0 41 41" xmlns="http://www.w3.org/2000/svg" id="qrSvg"></svg>
+    <h3>SCAN TO SAVE</h3><p>Point your camera here to save James's contact</p>
+    <svg viewBox="0 0 49 49" xmlns="http://www.w3.org/2000/svg" id="qrSvg"></svg>
     <button class="qr-close" onclick="toggleQR()">Close</button>
   </div>
 </div>
 <script>
 function saveContact(){window.location.href='contact.vcf';}
 function toggleQR(){document.getElementById('qrOverlay').classList.toggle('active');}
-function generateQR(){const svg=document.getElementById('qrSvg');fetch('qr-code.svg').then(r=>r.text()).then(t=>{const doc=new DOMParser().parseFromString(t,'image/svg+xml');const paths=doc.querySelectorAll('path');svg.innerHTML='';const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');bg.setAttribute('width','41');bg.setAttribute('height','41');bg.setAttribute('fill','var(--bg)');svg.appendChild(bg);paths.forEach(p=>{const n=document.createElementNS('http://www.w3.org/2000/svg','path');n.setAttribute('d',p.getAttribute('d'));n.setAttribute('fill','var(--accent)');svg.appendChild(n);});}).catch(()=>{svg.innerHTML='<text x="20.5" y="22" text-anchor="middle" fill="var(--accent)" font-size="3">QR</text>';});}
+function generateQR(){const svg=document.getElementById('qrSvg');fetch('qr-code.svg').then(r=>r.text()).then(t=>{const doc=new DOMParser().parseFromString(t,'image/svg+xml');const src=doc.querySelector('svg');const vb=(src&&src.getAttribute('viewBox'))||'0 0 49 49';const side=vb.split(' ')[2]||'49';svg.setAttribute('viewBox',vb);const paths=doc.querySelectorAll('path');svg.innerHTML='';const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');bg.setAttribute('width',side);bg.setAttribute('height',side);bg.setAttribute('fill','var(--bg)');svg.appendChild(bg);paths.forEach(p=>{const n=document.createElementNS('http://www.w3.org/2000/svg','path');n.setAttribute('d',p.getAttribute('d'));n.setAttribute('fill','var(--accent)');svg.appendChild(n);});}).catch(()=>{svg.innerHTML='<text x="20.5" y="22" text-anchor="middle" fill="var(--accent)" font-size="3">QR</text>';});}
 generateQR();
 </script>
 </body>
